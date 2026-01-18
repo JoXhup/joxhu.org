@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+        --radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply text-foreground;
+        background-color: transparent;
+        /* Allow fixed background to show */
+    }
+}
+
+@layer utilities {
+    .animate-slow-zoom {
+        animation: slow-zoom 20s ease-in-out infinite alternate;
+    }
+
+    .bg-dot-pattern {
+        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+    }
+
+    /* Fixed "World" Background - Improved for Phase 3 */
+    .bg-main-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -10;
+        /* Lower z-index to stay behind everything */
+        background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* Position at bottom like in Image 3 */
+        filter: brightness(0.8) saturate(1.8) contrast(1.1);
+        /* Extremely vibrant and detailed 'mundito' look */
+    }
+
+
+
+    .bg-main-overlay {
+        background: radial-gradient(circle at 50% 100%, rgba(5, 5, 10, 0.4) 0%, rgba(5, 5, 10, 0.85) 100%);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -9;
+        pointer-events: none;
+    }
+
+    /* Mouse Follow Glow Effect */
+    .mouse-glow-container {
+        position: relative;
+    }
+
+    .mouse-glow-element {
+        position: absolute;
+        pointer-events: none;
+        background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(88, 101, 242, 0.15), transparent 40%);
+        z-index: 0;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .mouse-glow-container:hover .mouse-glow-element {
+        opacity: 1;
+    }
+}
+
+@keyframes slow-zoom {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+}
