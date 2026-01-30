@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import GlowCard from '@/components/ui/GlowCard';
 import { toast } from 'sonner';
+import emailjs from '@emailjs/browser';
 
 const contactMethods = [
     {
@@ -69,15 +70,43 @@ export default function Contacto() {
         e.preventDefault();
         setSending(true);
 
-        // Simulate API call logic
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            // Usaremos FormSubmit.co que es gratuito y no requiere registro previo
+            // Enviará los datos directamente a tu correo joshuamoranvar@gmail.com
+            const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/joshuamoranvar@gmail.com";
 
-        setSending(false);
-        setSent(true);
-        toast.success('¡Mensaje enviado correctamente!');
+            const response = await fetch(FORMSUBMIT_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    Nombre: formData.nombre,
+                    Email: formData.email,
+                    Servicio: formData.servicio,
+                    Mensaje: formData.mensaje,
+                    _subject: `Nuevo Cliente: ${formData.nombre} via joxhu.org`,
+                    _template: "table"
+                })
+            });
 
-        setFormData({ nombre: '', email: '', servicio: '', mensaje: '' });
-        setTimeout(() => setSent(false), 3000);
+            const data = await response.json();
+
+            if (data.success === "true" || response.ok) {
+                setSent(true);
+                toast.success('¡Mensaje enviado correctamente!');
+                setFormData({ nombre: '', email: '', servicio: '', mensaje: '' });
+            } else {
+                throw new Error('Error al enviar mensaje');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error('Error al enviar. Por favor confirma tu correo en la bandeja de entrada primero.');
+        } finally {
+            setSending(false);
+            setTimeout(() => setSent(false), 3000);
+        }
     };
 
     return (

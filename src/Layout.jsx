@@ -168,7 +168,7 @@ export default function Layout({ children, currentPageName }) {
                         {/* Logo */}
                         <Link to="/" className="flex items-center gap-2 group transition-transform hover:scale-105">
                             <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-all border border-white/10">
-                                <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
+                                <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo" className="w-full h-full object-cover" />
                             </div>
                             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
                                 JoXhu.org - Deluxe Coder
